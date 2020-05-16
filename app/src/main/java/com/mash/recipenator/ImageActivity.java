@@ -35,6 +35,7 @@ public class ImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_activity);
 
+
         // Find the buttons
         m_photoButton = findViewById(R.id.photo_button);
         m_imageView = findViewById(R.id.test_image);
@@ -54,7 +55,6 @@ public class ImageActivity extends AppCompatActivity {
                         String[] permission  = {Manifest.permission.CAMERA};
                         //Asks for permission
                         requestPermissions(permission, PERMISSION_CODE);
-
                     }
                     else
                     {
