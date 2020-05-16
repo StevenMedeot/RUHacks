@@ -70,12 +70,12 @@ public class AudioActivity extends AppCompatActivity
                     }
                     else
                     {
-                        RecordAudio();
+                        getSpeech(m_record);
                     }
                 }
                 else
                 {
-                    RecordAudio();
+                    getSpeech(m_record);
                 }
             }
         });
