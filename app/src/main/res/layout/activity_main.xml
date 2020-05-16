@@ -86,6 +86,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textAlignment="center"
+
+                android:background="@drawable/button_func"
                 tools:text="Add" />
 
         </LinearLayout>
