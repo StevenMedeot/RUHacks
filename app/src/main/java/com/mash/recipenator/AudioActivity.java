@@ -1,6 +1,7 @@
 package com.mash.recipenator;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -8,14 +9,19 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Locale;
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
@@ -28,24 +34,21 @@ public class AudioActivity extends AppCompatActivity
     private static final int AUDIO_CAPTURE_CODE = 1002;
 
 
-    private Button m_record, m_stopRecord, m_startPlay, m_stopPlay;
+    private Button m_record;
     private String m_pathSave = "";
     private MediaRecorder m_mediaRecorder;
-    private MediaPlayer m_mediaPlayer;
 
 
     private Uri m_uri;
+    private TextView txtResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.audio_activity);
-
+        txtResult = (TextView) findViewById(R.id.txtResult);
         m_record = findViewById(R.id.record_but);
-        m_stopRecord = findViewById(R.id.stop_but);
-        m_startPlay = findViewById(R.id.play_but);
-        m_stopPlay = findViewById(R.id.pause_but);
 
         // What happens on button click
         m_record.setOnClickListener(new View.OnClickListener()
@@ -77,35 +80,39 @@ public class AudioActivity extends AppCompatActivity
             }
         });
 
-        // What happens on button click
-        m_stopRecord.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                StopRecord();
-            }
-        });
+    }
 
+    public void getSpeech(View view)
+    {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
 
-        // What happens on button click
-        m_startPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                StartPlayback();
-            }
-        });
+        if (intent.resolveActivity(getPackageManager()) != null)
+        {
+            startActivityForResult(intent,10);
+        }
+        else
+        {
+            Toast.makeText(this, "Device does not support speech input", Toast.LENGTH_SHORT).show();
+        }
 
-        // What happens on button click
-        m_stopPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                StopPlayback();
-            }
-        });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        switch (requestCode)
+        {
+            case 10:
+                if (resultCode == RESULT_OK && data != null)
+                {
+                    ArrayList<String> result =  data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    txtResult.setText(result.get(0));
+                }
+                break;
+        }
     }
 
     private void SetupMediaRecorder()
@@ -134,62 +141,9 @@ public class AudioActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-
-        m_stopPlay.setEnabled(false);
-        m_startPlay.setEnabled(false);
-        m_stopRecord.setEnabled(true);
         m_record.setEnabled(false);
 
         Toast.makeText(this, "Recording...", Toast.LENGTH_SHORT).show();
-    }
-
-    private void StopRecord()
-    {
-
-        m_mediaRecorder.stop();
-        m_mediaRecorder.reset();
-
-        m_stopPlay.setEnabled(false);
-        m_startPlay.setEnabled(true);
-        m_stopRecord.setEnabled(false);
-        m_record.setEnabled(true);
-    }
-
-    private void StartPlayback()
-    {
-        m_stopPlay.setEnabled(true);
-        m_startPlay.setEnabled(false);
-        m_stopRecord.setEnabled(false);
-        m_record.setEnabled(false);
-
-        m_mediaPlayer = new MediaPlayer();
-        try {
-            m_mediaPlayer.setDataSource(m_pathSave);
-            m_mediaPlayer.prepare();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
-        m_mediaPlayer.start();
-        Toast.makeText(this, "Playing...", Toast.LENGTH_SHORT).show();
-    }
-
-    private void StopPlayback()
-    {
-        m_stopPlay.setEnabled(false);
-        m_startPlay.setEnabled(true);
-        m_stopRecord.setEnabled(false);
-        m_record.setEnabled(true);
-
-
-        if(m_mediaPlayer != null)
-        {
-            m_mediaPlayer.stop();
-            m_mediaPlayer.release();
-            SetupMediaRecorder();
-        }
     }
 
     @Override

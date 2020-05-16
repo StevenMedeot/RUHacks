@@ -6,34 +6,28 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Recording" />
+        android:text="Record" />
 
     <Button
         android:id="@+id/record_but"
         android:layout_width="132dp"
         android:layout_height="wrap_content"
-        android:text="Record" />
-
-    <Button
-        android:id="@+id/stop_but"
-        android:layout_width="132dp"
-        android:layout_height="wrap_content"
-        android:text="Stop" />
+        android:text="Record"
+        android:onClick="getSpeech" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Playback" />
+        android:layout_marginTop="40dp"
+        android:text="Text Output" />
 
-    <Button
-        android:id="@+id/play_but"
-        android:layout_width="128dp"
+    <TextView
+        android:id="@+id/txtResult"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Play Recording" />
+        android:layout_marginTop="100dp"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:textStyle="normal" />
 
-    <Button
-        android:id="@+id/pause_but"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:text="Stop Recording" />
 </LinearLayout>
