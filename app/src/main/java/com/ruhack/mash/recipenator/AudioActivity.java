@@ -1,27 +1,22 @@
 package com.ruhack.mash.recipenator;
 
 import android.Manifest;
-import android.content.ContentValues;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import java.io.IOException;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity
+public class AudioActivity extends AppCompatActivity
 {
 
     private static final int PERMISSION_CODE = 1000;

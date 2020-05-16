@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Recipenator</string>
+    <string name="title_activity_audio">AudioActivity</string>
 </resources>
