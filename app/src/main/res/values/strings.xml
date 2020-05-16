@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Recipenator</string>
+    <string name="ingredientTitle"><u>Ingredients</u></string>
 </resources>
