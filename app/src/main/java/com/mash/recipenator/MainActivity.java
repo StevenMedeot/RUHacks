@@ -1,3 +1,4 @@
+
 package com.mash.recipenator;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,10 +24,21 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view)
             {
                 Intent intent = new Intent(MainActivity.this, AudioActivity.class);
+                startActivity(intent);
             }
         });
 
         Button buttonText = (Button) findViewById(R.id.text_b);
+        buttonText.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
+                startActivity(intent);
+            }
+        });
+
         Button buttonImage = (Button) findViewById(R.id.image_b);
     }
 
