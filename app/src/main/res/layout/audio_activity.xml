@@ -12,12 +12,16 @@
         android:id="@+id/record_but"
         android:layout_width="132dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_func"
+        android:layout_margin="5dp"
         android:text="Record" />
 
     <Button
         android:id="@+id/stop_but"
         android:layout_width="132dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_func"
+        android:layout_margin="5dp"
         android:text="Stop" />
 
     <TextView
@@ -29,11 +33,15 @@
         android:id="@+id/play_but"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_func"
+        android:layout_margin="5dp"
         android:text="Play Recording" />
 
     <Button
         android:id="@+id/pause_but"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_func"
+        android:layout_margin="5dp"
         android:text="Stop Recording" />
 </LinearLayout>
