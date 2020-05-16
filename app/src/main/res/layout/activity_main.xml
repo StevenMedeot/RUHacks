@@ -14,39 +14,92 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="460dp"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:layout_margin="30dp">
+        android:layout_height="match_parent"
+        android:layout_margin="30dp"
+        android:layout_weight="9"
+        android:gravity="center|top">
+
 
         <Button
             android:id="@+id/audio_b"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/button_func"
             android:text="Audio" />
 
-
         <Button
             android:id="@+id/image_b"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/button_func"
             android:text="Image" />
 
-        <Button
-            android:id="@+id/text_b"
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="10.5"
+        android:text="@string/ingredientTitle"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="4"
+        android:background="#D3D3D3"
+        android:fillViewport="false">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_func"
-            android:text="Text" />
-    </LinearLayout>
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/EditText1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/ingredientTitle"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/newIngredient_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                tools:text="Add" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/recipe_b"
+        android:layout_width="161dp"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:layout_weight="10"
+        android:background="@drawable/button_func"
+        android:text="Find Recipe"
+        android:textAlignment="center" />
 
 
 </LinearLayout>
