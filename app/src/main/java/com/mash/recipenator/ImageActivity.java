@@ -7,6 +7,8 @@ import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,10 +51,10 @@ public class ImageActivity extends AppCompatActivity {
                 // System os check
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                 {
-                    if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED)
+                    if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED )
                     {
                         // No permissions, will fool with this later
-                        String[] permission  = {Manifest.permission.CAMERA};
+                        String[] permission  = {Manifest.permission.CAMERA ,Manifest.permission.INTERNET};
                         //Asks for permission
                         requestPermissions(permission, PERMISSION_CODE);
                     }
@@ -88,11 +90,18 @@ public class ImageActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK)
+        {
             m_imageView.setImageURI(m_uri);
+
+            Bitmap b = ((BitmapDrawable)(m_imageView.getDrawable())).getBitmap();
+
+            String output = CloudIntegration.GetFromImage(this, b, 60.0f);
+
+        }
     }
+
 }

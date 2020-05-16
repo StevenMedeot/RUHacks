@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "550670154794",
+    "firebase_url": "https://recipenator-560bb.firebaseio.com",
+    "project_id": "recipenator-560bb",
+    "storage_bucket": "recipenator-560bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550670154794:android:f1751be2f70be993f39753",
+        "android_client_info": {
+          "package_name": "com.mash.recipenator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550670154794-ls38s842489eucskc980cg4om4hvmjt2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mash.recipenator",
+            "certificate_hash": "6cc1a69588ef4444b86130ac56c7dc0dc7d75ab5"
+          }
+        },
+        {
+          "client_id": "550670154794-866ga6b517t59adoonjh295k1381tfmg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWLw0Gm4k4FqpliKINRGAsSrjyyGLlq48"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550670154794-866ga6b517t59adoonjh295k1381tfmg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
