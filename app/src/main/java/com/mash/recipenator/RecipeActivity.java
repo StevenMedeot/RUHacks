@@ -38,7 +38,6 @@ public class RecipeActivity extends AppCompatActivity {
 
     TextView text;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +49,7 @@ public class RecipeActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DoIt().execute();
+                new DoSomething().execute();
             }
         });
 
@@ -66,32 +65,9 @@ public class RecipeActivity extends AppCompatActivity {
 
     }
 
-    public class DoIt extends AsyncTask<Void,Void,Void>{
-        String ingredientsFinal; //pass words in param for other code
+    public class DoSomething extends AsyncTask<Void,Void,Void>{
+        String words;
 
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                String recipeUrl = "https://www.allrecipes.com/recipe/267624/instant-pot-pot-roast-with-potatoes-and-carrots/";
-                Document recipeDoc = Jsoup.connect(recipeUrl).get();
-
-                Elements ingredientsList = recipeDoc.getElementsByClass("ingredients-section");
-                /*if (ingredientsList.isEmpty())
-                {
-                    System.out.println("Search yielded no results:");
-                    //return null;
-                }*/
-                for (Element ingredients: ingredientsList) {
-                    ingredientsFinal = ingredients.getElementsByClass("ingredients-item-name" + "\n").text();
-                }
-
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        /*
         @Override
         protected Void doInBackground(Void... voids) {
             try {
@@ -104,12 +80,12 @@ public class RecipeActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             return null;
-        } */
+        }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            text.setText(ingredientsFinal); //pass words in param for other code
+            text.setText(words); //pass words in param for other code
 
         }
     }
