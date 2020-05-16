@@ -16,19 +16,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button buttonAudio = (Button) findViewById(R.id.audio_b);
+        Button buttonAudio = findViewById(R.id.audio_b);
+        Button buttonImage = findViewById(R.id.image_b);
+
         buttonAudio.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(MainActivity.this, AudioActivity.class);
-                startActivity(intent);
+                MoveToActivity(AudioActivity.class);
             }
         });
 
-        Button buttonText = (Button) findViewById(R.id.text_b);
-        Button buttonImage = (Button) findViewById(R.id.image_b);
+        buttonImage.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                MoveToActivity(ImageActivity.class);
+            }
+        });
+    }
+
+
+    void MoveToActivity(Class<?> type)
+    {
+        Intent intent = new Intent(MainActivity.this, type);
+        startActivity(intent);
     }
 
 
