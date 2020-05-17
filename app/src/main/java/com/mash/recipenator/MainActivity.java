@@ -29,6 +29,7 @@ import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +40,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-
 public class MainActivity extends AppCompatActivity
 {
-
     public static final String EXTRA_MESSAGE = "com.mash.recipenator.MESSAGE";
     private static final int PERMISSION_CODE = 1000;
     private static final int IMAGE_CAPTURE_CODE = 1001;
@@ -53,11 +52,15 @@ public class MainActivity extends AppCompatActivity
 
     private Uri m_uri;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         ingredientLayout = findViewById(R.id.ingredient_layout);
         AddTextView();
@@ -125,6 +128,8 @@ public class MainActivity extends AppCompatActivity
 
     private void AudioButton(Button button)
     {
+        final Button buttonAudio = findViewById(R.id.audio_b);
+
         // System os check
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
@@ -146,6 +151,12 @@ public class MainActivity extends AppCompatActivity
         {
             getSpeech(button);
         }
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "audio_b");
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "audio");
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "speech");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
     private void ImageButton()
