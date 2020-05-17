@@ -16,6 +16,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.net.URLEncoder;
 import java.io.IOException;
 
 
@@ -71,10 +72,28 @@ public class RecipeActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                String recipeUrl = "https://www.allrecipes.com/recipe/267624/instant-pot-pot-roast-with-potatoes-and-carrots/";
-                Document doc = Jsoup.connect(recipeUrl).get();
+                String encoding = "UTF-8";
+                String var = "";
+                String searchText = "Potatoes Carrots Steak";
+                Document google = Jsoup.connect("https://www.google.com/search?q=" + URLEncoder.encode(searchText, encoding)).userAgent("Mozilla/5.0").get();
 
-                words=doc.text();
+                Elements recipeResults = google.getElementsByClass("kCrYT");
+                if (recipeResults.isEmpty()) {
+                    System.out.println("Search yielded no results :(");
+                }
+
+                for (Element result : recipeResults) {
+                    Elements link = result.getElementsByTag("a");
+                    //System.out.println(link);
+                    if(link.isEmpty()) {
+                        continue;
+                    }
+                    String fullUrl = link.attr("href").toString();
+                    var += fullUrl.substring(7,fullUrl.indexOf("/&"));
+                    //System.out.println(fullUrl.substring(7,fullUrl.indexOf("/&")));
+
+                }
+                words=var;
 
             } catch(Exception e) {
                 e.printStackTrace();
