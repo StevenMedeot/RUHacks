@@ -12,4 +12,5 @@
     <color name="buttonPressed">#88231C</color>
     <color name="buttonHover">#FF3E30</color>
     <color name="buttonDisabled">#553F3F</color>
+    <color name="greyBackground">#C1C1C1</color>
 </resources>
