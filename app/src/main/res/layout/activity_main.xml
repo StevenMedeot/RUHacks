@@ -100,5 +100,4 @@
         android:text="Find Recipe"
         android:textAlignment="center" />
 
-
 </LinearLayout>
