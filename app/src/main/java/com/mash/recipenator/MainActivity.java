@@ -39,9 +39,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+
 public class MainActivity extends AppCompatActivity
 {
 
+    public static final String EXTRA_MESSAGE = "com.mash.recipenator.MESSAGE";
     private static final int PERMISSION_CODE = 1000;
     private static final int IMAGE_CAPTURE_CODE = 1001;
 
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity
         final Button buttonAudio = findViewById(R.id.audio_b);
         Button buttonImage = findViewById(R.id.image_b);
         Button newIngButton = findViewById(R.id.newIngredient_b);
+        Button recipeButton = findViewById(R.id.recipe_b);
 
         buttonAudio.setOnClickListener(new View.OnClickListener()
         {
@@ -90,12 +93,32 @@ public class MainActivity extends AppCompatActivity
                 AddTextView();
             }
         });
+
+        recipeButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                MoveToActivity(RecipeActivity.class);
+            }
+        });
+
     }
 
 
     void MoveToActivity(Class<?> type)
     {
         Intent intent = new Intent(MainActivity.this, type);
+        String message = "";
+        for(int i = 0; i < ingredientList.size(); i++)
+        {
+            message += ingredientList.get(i).getText() + " ";
+        }
+
+        message += "recipe";
+
+        intent.putExtra(EXTRA_MESSAGE, message);
+
         startActivity(intent);
     }
 

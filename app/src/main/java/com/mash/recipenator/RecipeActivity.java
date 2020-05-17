@@ -2,6 +2,7 @@ package com.mash.recipenator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Build;
@@ -22,27 +23,18 @@ import java.io.IOException;
 
 public class RecipeActivity extends AppCompatActivity {
 
-    /*
-    TextView textView;
-        String content="<h1>Recipe from allrecipes.com </h1>\n" +
-                " <h2> Ingredients </h2> " +
-                " <ingredients>\n" +
-                " <li>One</li>\n" +
-                " <li>Two</li>\n" +
-                " </ingredients>\n " +
-                " <h2> Directions </h2> " +
-                " <directions>\n" +
-                " <li> 1. Put oil in pan</li> " +
-                " <li> 2. Put beef in pan and cook until no longer pink </li> " +
-                "</directions>\n ";
-*/
 
     TextView text;
+    String message = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+
+        // Get the Intent that started this activity and extract the string
+        Intent intent = getIntent();
+        message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
         text=(TextView)findViewById(R.id.ingredients);
 
@@ -54,16 +46,6 @@ public class RecipeActivity extends AppCompatActivity {
             }
         });
 
-
-        /*
-        textView = (TextView) findViewById(R.id.simpleTextView);
-        //set Text in TextView using fromHtml() method with version check
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            textView.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
-        } else
-            textView.setText(Html.fromHtml(content));
-         */
-
     }
 
     public class DoSomething extends AsyncTask<Void,Void,Void>{
@@ -74,7 +56,7 @@ public class RecipeActivity extends AppCompatActivity {
             try {
                 String encoding = "UTF-8";
                 String var = "";
-                String searchText = "Potatoes Carrots Steak";
+                String searchText = message;
                 Document google = Jsoup.connect("https://www.google.com/search?q=" + URLEncoder.encode(searchText, encoding)).userAgent("Mozilla/5.0").get();
 
                 Elements recipeResults = google.getElementsByClass("kCrYT");
@@ -89,7 +71,7 @@ public class RecipeActivity extends AppCompatActivity {
                         continue;
                     }
                     String fullUrl = link.attr("href").toString();
-                    var += fullUrl.substring(7,fullUrl.indexOf("/&"));
+                    var += fullUrl.substring(7,fullUrl.indexOf("&"));
                     //System.out.println(fullUrl.substring(7,fullUrl.indexOf("/&")));
 
                 }
