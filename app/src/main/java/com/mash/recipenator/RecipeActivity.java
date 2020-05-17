@@ -6,8 +6,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Build;
+import android.text.util.Linkify;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.text.Html;
 
@@ -19,38 +23,58 @@ import org.jsoup.select.Elements;
 
 import java.net.URLEncoder;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
-public class RecipeActivity extends AppCompatActivity {
-
-
+public class RecipeActivity extends AppCompatActivity
+{
     TextView text;
     String message = "";
+
+    LinearLayout recipeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
+        recipeLayout = findViewById(R.id.recipe_layout);
+
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
-        text=(TextView)findViewById(R.id.ingredients);
 
-        Button button=(Button) findViewById(R.id.getBtn);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DoSomething().execute();
-            }
-        });
+        new DoSomething().execute();
 
+    }
+
+
+    View CreateNewRecipe(String link)
+    {
+        final LinearLayout newLayout = new LinearLayout(this);
+        newLayout.setOrientation(LinearLayout.HORIZONTAL);
+        final TextView newView = new TextView(this);
+        newView.setTextAppearance(getApplicationContext(), R.style.EditText);
+        newView.setText(link);
+
+        Linkify.addLinks(newView, Linkify.ALL);
+        final ImageView imageView = new ImageView(this);
+
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 6));
+        newView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1));
+        newLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200));
+        newLayout.setBackgroundColor(getResources().getColor(R.color.greyBackground));
+        newLayout.addView(imageView);
+        newLayout.addView(newView);
+
+        return newLayout;
     }
 
     public class DoSomething extends AsyncTask<Void,Void,Void>{
         String words;
-
+        ArrayList<View> views = new ArrayList<View>();
+        int ind = 0;
         @Override
         protected Void doInBackground(Void... voids) {
             try {
@@ -71,8 +95,17 @@ public class RecipeActivity extends AppCompatActivity {
                         continue;
                     }
                     String fullUrl = link.attr("href").toString();
-                    var += fullUrl.substring(7,fullUrl.indexOf("&"));
+
+                    if(ind == recipeResults.size())
+                        continue;
+                    if(ind % 2 == 0)
+                        views.add(CreateNewRecipe(fullUrl.substring(7,fullUrl.indexOf("&"))));
+
+                    publishProgress();
+                    //var += fullUrl.substring(7,fullUrl.indexOf("&"));
                     //System.out.println(fullUrl.substring(7,fullUrl.indexOf("/&")));
+                    ind++;
+
 
                 }
                 words=var;
@@ -83,10 +116,18 @@ public class RecipeActivity extends AppCompatActivity {
             return null;
         }
 
+        protected void onProgressUpdate(Void aVoid)
+        {
+            super.onProgressUpdate(aVoid);
+        }
+
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            text.setText(words); //pass words in param for other code
+            for(View view : views) {
+                recipeLayout.addView(view);
+            }
+
 
         }
     }
