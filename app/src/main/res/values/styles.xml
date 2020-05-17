@@ -9,7 +9,9 @@
         <item name="background">@color/backgroundColor</item>
         <item name="android:textColor">@color/colorText</item>
         <item name="backgroundTint">@color/buttonPrimary</item>
+    </style>
 
+    <style name="EditText" id="EditText" parent="Widget.AppCompat.EditText">
     </style>
 
 

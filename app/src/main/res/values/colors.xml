@@ -7,7 +7,8 @@
     <color name="colorText">#FFFFFF</color>
 
 
-    <color name="buttonPrimary">#FF6358</color>
+    <color name="findColour">#58ff85</color>
+    <color name="buttonPrimary" id="primary">#FF6358</color>
     <color name="buttonPressed">#88231C</color>
     <color name="buttonHover">#FF3E30</color>
     <color name="buttonDisabled">#553F3F</color>

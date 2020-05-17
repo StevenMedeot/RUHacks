@@ -25,10 +25,12 @@ public class CloudIntegration
 {
 
     public static String message = "";
+    public static boolean complete = false;
     private final String CLOUD_API_KEY = "AIzaSyAWLw0Gm4k4FqpliKINRGAsSrjyyGLlq48";
 
     public static String GetFromImage(final Context context, Bitmap bitmap, final float confidenceThreshold)
     {
+        complete = false;
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmap);
 
 
@@ -49,10 +51,10 @@ public class CloudIntegration
                             float confidence = label.getConfidence();
                             if(confidence < confidenceThreshold/100)
                                 continue;
-                            message += "\n " + text + " Wow so confident with " + confidence;
+                            message += text + " ";
                         }
-
-                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                        complete = true;
+                        //Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -60,7 +62,9 @@ public class CloudIntegration
                     public void onFailure(@NonNull Exception e) {
                         // Task failed with an exception
                         // ...
-                        message = "Fail";
+                        Toast.makeText(context, "Error please try again.", Toast.LENGTH_SHORT).show();
+                        message = "Ingredient";
+                        complete = true;
                     }
                 });
 
